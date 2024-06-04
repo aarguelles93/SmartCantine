@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import CameraMenu from './CameraView';
-
+import axios from 'axios';
+import CameraMenu from './CameraView copy';
+// import CameraMenu from './CameraView';
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -25,7 +26,23 @@ export default function App() {
   );
 }
 
+async function getJsonData() {
+  const response =await axios.get('https://jsonplaceholder.typicode.com/todos/1')
+  return response.data
+}
+
 function HomeScreen({ navigation }) {
+  const [data, setData] = useState([]);
+
+  console.log(data)
+
+  useEffect(() => {
+    getJsonData()
+
+    .then(json => setData(json))
+
+  }, [])
+
   return (
     <View style={styles.container}>
       <Button
