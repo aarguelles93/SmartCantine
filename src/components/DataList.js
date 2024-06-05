@@ -1,31 +1,54 @@
-// src/components/DataList.js
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList, StyleSheet ,Image} from 'react-native';
+import { db } from './firebase-config';
+import { collection, getDocs } from 'firebase/firestore';
 
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-
-
-
-const dummyProducts = [
-  { id: 1, category: 'Desert', name: 'Apple Pie', price: '15zl',tag:"apple-pie" },
-  { id: 2, category: 'Desert', name: 'Suffle', price: '20zl',tag:"suffle" },
-  { id: 3, category: 'Meat', name: 'Steak', price: '80zl',tag:"steak" },
-  { id: 4, category: 'Meal', name: 'Doner', price: '35zl',tag:"doner" },
-
-];
-
-
+// import {defaultimageUrl} from   './image500.png';
 const DataList = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, 'restaurant/restaurant1/products'));
+        const items = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setData(items);
+        console.log(items);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
+
   return (
+
     <View style={styles.container}>
-      {dummyProducts.map((item) => (
-        <View key={item.id} style={styles.card}>
-           <Text style={styles.category}>{item.category}</Text>
-          <Text style={styles.name}>{item.name}</Text>
-          <Text style={styles.text}>Price: {item.price}</Text>
-          <Text style={styles.text}>Tag: {item.tag}</Text>
-        </View>
-      ))}
-    </View>
+    {data.map((item) => (
+      <View key={item.id} style={styles.card}>
+         <Text style={styles.category}>Category:{item.category}</Text>
+         <Image
+            source={{ uri: item.image_url ? item.image_url : '' }}
+            style={styles.image}
+          />
+        <Text style={styles.name}>Name:{item.name}</Text>
+        <Text style={styles.text}>Price: {item.price} zl</Text>
+        <Text style={styles.text}>Tag: {item.tag}</Text>
+      </View>
+    ))}
+  </View>
   );
 };
 
@@ -46,6 +69,12 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 }, // for iOS
     shadowOpacity: 0.1, // for iOS
     shadowRadius: 8, // for iOS
+  },
+  image: {
+    width: '100%', // Adjust the width as needed
+    height: 200, // Adjust the height as needed
+    borderRadius: 8,
+    marginBottom: 10,
   },
   name: {
     fontSize: 18,
