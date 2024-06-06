@@ -5,6 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import axios from 'axios';
 import CameraMenu from './CameraView copy';
 // import CameraMenu from './CameraView';
+import MenuView from './src/components/MenuView'
+
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -20,6 +22,11 @@ export default function App() {
           name="CameraMenu" 
           component={CameraMenu} 
           options={{ title: 'Camera Menu' }} 
+        />
+          <Stack.Screen 
+          name="MenuView" 
+          component={MenuView} 
+          options={{ title: 'Menu Page' }} 
         />
       </Stack.Navigator>
     </NavigationContainer>
@@ -48,6 +55,10 @@ function HomeScreen({ navigation }) {
       <Button
         title="Open Camera"
         onPress={() => navigation.navigate('CameraMenu')}
+      />
+       <Button
+        title="Open Menu"
+        onPress={() => navigation.navigate('MenuView')}
       />
     </View>
   );
