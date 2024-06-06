@@ -43,7 +43,7 @@ function HomeScreen({ navigation }) {
 
   }, [])
 
-  return (
+  return (    
     <View style={styles.container}>
       <Button
         title="Open Camera"
