@@ -38,14 +38,14 @@ const DataList = () => {
     <View style={styles.container}>
     {data.map((item) => (
       <View key={item.id} style={styles.card}>
-         <Text style={styles.category}>Category:{item.category}</Text>
+         <Text style={styles.category}>{item.category}</Text>
          <Image
             source={{ uri: item.image_url ? item.image_url : '' }}
             style={styles.image}
           />
-        <Text style={styles.name}>Name:{item.name}</Text>
-        <Text style={styles.text}>Price: {item.price} zl</Text>
-        <Text style={styles.text}>Tag: {item.tag}</Text>
+        <Text style={styles.name}>{item.name}</Text>
+        <Text style={styles.text}> {item.price} zl</Text>
+        {/* <Text style={styles.text}>{item.tag}</Text> */}
       </View>
     ))}
   </View>
