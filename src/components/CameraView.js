@@ -1,7 +1,7 @@
 import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useState } from 'react';
-import { uploadPicture } from './firebase-config';
 import * as ImagePicker from 'expo-image-picker';
+import { uploadPicture } from './firebase-config';
 
 export default function CameraView() {
   const [image, setImage] = useState(null);

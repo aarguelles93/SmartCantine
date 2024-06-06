@@ -3,8 +3,9 @@ import { StyleSheet, View, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import axios from 'axios';
-import CameraMenu from './CameraView copy';
-// import CameraMenu from './CameraView';
+import MenuView from './src/components/MenuView'
+import CameraView from './src/components/CameraView';
+
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -17,9 +18,14 @@ export default function App() {
           options={{ title: 'Home' }} 
         />
         <Stack.Screen 
-          name="CameraMenu" 
-          component={CameraMenu} 
+          name="CameraView" 
+          component={CameraView} 
           options={{ title: 'Camera Menu' }} 
+        />
+          <Stack.Screen 
+          name="MenuView" 
+          component={MenuView} 
+          options={{ title: 'Menu Page' }} 
         />
       </Stack.Navigator>
     </NavigationContainer>
@@ -47,7 +53,11 @@ function HomeScreen({ navigation }) {
     <View style={styles.container}>
       <Button
         title="Open Camera"
-        onPress={() => navigation.navigate('CameraMenu')}
+        onPress={() => navigation.navigate('CameraView')}
+      />
+       <Button
+        title="Open Menu"
+        onPress={() => navigation.navigate('MenuView')}
       />
     </View>
   );
